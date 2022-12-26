@@ -34,7 +34,7 @@ export const promptSettings: Record<string, PromptSettings> = {
         buttonLabel : "Explain",
         buttonIcon : ProjectRoadmapIcon,
         title : "ChatGPT - Explain Code",
-        instructions: "Explain the code in the focal cell in a few sentences, ELI5 style. Focus solely on the code in the focal cell.",
+        instructions: "Explain what the code in the focal cell is doing. Focus exlusively on the code in the focal cell.",
         includeStdout: true,
         includeStderr: false, 
         numPrevCells: defaultNumCells,

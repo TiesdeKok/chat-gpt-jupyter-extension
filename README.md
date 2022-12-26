@@ -15,6 +15,28 @@ Current primary functions, have ChatGPT:
 - [ChatGPT](https://openai.com/blog/chatgpt/) for doing all the heavy lifting. 
 - [wong2/chat-gpt-google-extension](https://github.com/wong2/chat-gpt-google-extension) for serving as a base for the extension. The entire backend integration with ChatGPT is built by them and I use it as-is (including the readme instructions below). It is phenomenal work and I highly recommend checking it out.
 
+## Screenshots
+
+**ChatGPT - Format**   
+
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_format.png"><img src="static/screenshot_format.png" width="450"></a>
+
+**ChatGPT - Explain**    
+
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_explain.png"><img src="static/screenshot_explain.png" width="450"></a>
+
+**ChatGPT - Debug**     
+
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_debug.png"><img src="static/screenshot_debug.png" width="450"></a>
+
+**ChatGPT - Complete**    
+
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_completion.png"><img src="static/screenshot_completion.png" width="450"></a>
+
+**ChatGPT - Fun**    
+
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_fun.png"><img src="static/screenshot_fun.png" width="450"></a>
+
 ## Installation
 
 ### Install to Chrome/Edge
@@ -54,6 +76,8 @@ Not yet available, waiting for approval.
     - Generate code that does not work
     - Provide incorrect explanations & error explanations
     - Incorrectly highlight correct code as incorrect
+
+**For best results you might have to try a few times, different tries can give different results.**
 
 ## Issues & Feature Requests
 
