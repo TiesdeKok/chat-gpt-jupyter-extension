@@ -1,0 +1,134 @@
+@keyframes gpt-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.chat-gpt-button {
+    margin-left: 10px;
+    margin-top: 3px;
+}
+
+.chat-gpt-container {
+  margin-bottom: 30px;
+  border-radius: 8px;
+  border: 1px solid;
+  flex-basis: 0;
+  flex-grow: 1;
+
+  &.sidebar-free {
+    margin-left: 30px;
+    height: fit-content;
+  }
+
+  @media (prefers-color-scheme: light) {
+    border-color: #dadce0;
+    background-color: white;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border-color: #3c4043;
+    background-color: #202124;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .gpt-inner {
+    padding: 15px;
+    line-height: 1.5;
+  }
+
+  .icon-and-text {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .icon {
+    padding-top: 2px;
+    margin-right: 5px;
+  }
+
+  .manual-btn {
+    cursor: pointer;
+  }
+
+  .gpt-loading {
+    color: #b6b8ba;
+    animation: gpt-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  #answer {
+    font-size: 15px;
+    line-height: 1.6;
+    border-radius: 8px;
+
+    pre {
+      margin-top: 10px;
+    }
+
+    & > p:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    code {
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    pre code.hljs {
+      padding: 0;
+      background-color: transparent;
+    }
+
+    ol li {
+      list-style: disc;
+    }
+
+    .gpt-link {
+      float: right;
+      font-size: 13px;
+      margin-top: 5px;
+      text-decoration: underline;
+      color: black;
+      opacity: 0.8;
+
+      &:visited {
+        color: black;
+      }
+    }
+
+    .gpt-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+
+      p {
+        font-weight: bold;
+      }
+
+      .gpt-feedback {
+        display: flex;
+        gap: 6px;
+        cursor: pointer;
+      }
+
+      .gpt-feedback-selected {
+        color: #f08080;
+      }
+    }
+
+    .gpt-tip {
+      font-style: italic;
+      margin-top: 10px;
+    }
+  }
+}

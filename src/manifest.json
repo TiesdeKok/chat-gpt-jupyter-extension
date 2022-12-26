@@ -1,0 +1,29 @@
+{
+  "name": "ChatGPT - Jupyter - AI Assistant",
+  "description": "ChatGPT helper in Jupyter  response alongside Google Search results",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "host_permissions": ["https://*.openai.com/"],
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*.ipynb"
+      ],
+      "js": ["content-script.js"],
+      "css": ["content-script.css"]
+    }
+  ]
+}
