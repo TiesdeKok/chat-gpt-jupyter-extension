@@ -2,13 +2,15 @@
 
 A browser extension to provide various helper functions in Jupyter Notebooks, powered by ChatGPT.
 
-Current primary functions, have ChatGPT:
+Primary functions, have ChatGPT:
 
 - **Format** - Automatically add comments, docstrings, and formatting to your code cell.
 - **Explain** - Explain the content of your code cell, ELI5 style.
 - **Debug** - Help you debug an error message in your code cell.
 - **Complete** - Help you complete a code snippet in your code cell.
 - **Fun** - Generate a poem, meme, or joke based on your code (because why not?).
+
+**Project status:** Beta - Bugs likely - If you run into issues or have feature suggestions --> Submit them as an issue!
 
 **Major acknowledgements:** 
 
@@ -79,6 +81,14 @@ Not yet available, waiting for approval.
 
 **For best results you might have to try a few times, different tries can give different results.**
 
-## Issues & Feature Requests
+## Issues & Feature requests
 
 Please report any issues or feature requests on the GitHub Issue tab. I will try to respond as soon as possible!
+
+## Outstanding items & Future plans
+
+- [ ] Add Jupyter Lab support   
+- [ ] Add Google Colab support
+- [ ] Add shortcuts  
+- [ ] Add interupt button   
+- [ ] Allow for custom prompts 
