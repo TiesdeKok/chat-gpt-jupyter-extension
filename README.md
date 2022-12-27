@@ -17,7 +17,16 @@ Primary functions, have ChatGPT:
 - [ChatGPT](https://openai.com/blog/chatgpt/) for doing all the heavy lifting. 
 - [wong2/chat-gpt-google-extension](https://github.com/wong2/chat-gpt-google-extension) for serving as a base for the extension. The entire backend integration with ChatGPT is built by them and I use it as-is (including the readme instructions below). It is phenomenal work and I highly recommend checking it out.
 
-## Screenshots
+**Caveats & Warnings:**
+
+- ChatGPT is amazing, however, it is not perfect and it does make mistakes. I consider ChatGPT to be a "keep your hands on the wheel and look at the road at all times" type of situation. You cannot blindly rely on it. Don't be surprised if it does any of the following:
+    - Modify your code in unexpected ways
+    - Generate code that does not work
+    - Provide incorrect explanations & error explanations
+    - Incorrectly highlight correct code as incorrect
+- In many cases you will get better results if you try a few times and pick the result you like best. ChatGPT likely can do what you want, but it might not be the first result it gives you.
+
+## Screenshot Gallery
 
 **ChatGPT - Format**   
 
@@ -70,16 +79,6 @@ Not yet available, waiting for approval.
 2. Install dependencies with `npm`
 3. `npm run build`
 4. Load `build/chromium/` or `build/firefox/` directory to your browser
-
-## Caveats & Warnings
-
-- ChatGPT is amazing, however, it is not perfect and it does make mistakes. I consider ChatGPT to be a "keep your hands on the wheel and look at the road at all times" type of situation. You cannot blindly rely on it. Don't be surprised if it does any of the following:
-    - Modify your code in unexpected ways
-    - Generate code that does not work
-    - Provide incorrect explanations & error explanations
-    - Incorrectly highlight correct code as incorrect
-
-**For best results you might have to try a few times, different tries can give different results.**
 
 ## Issues & Feature requests
 
