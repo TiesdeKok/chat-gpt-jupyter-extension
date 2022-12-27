@@ -21,23 +21,23 @@ Primary functions, have ChatGPT:
 
 **ChatGPT - Format**   
 
-<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_format.png"><img src="static/screenshot_format.png" width="750"></a>
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/blob/main/static/screenshot_format.png"><img src="static/screenshot_format.png" width="750"></a>
 
 **ChatGPT - Explain**    
 
-<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_explain.png"><img src="static/screenshot_explain.png" width="750"></a>
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/blob/main/static/screenshot_explain.png"><img src="static/screenshot_explain.png" width="750"></a>
 
 **ChatGPT - Debug**     
 
-<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_debug.png"><img src="static/screenshot_debug.png" width="750"></a>
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/blob/main/static/screenshot_debug.png"><img src="static/screenshot_debug.png" width="750"></a>
 
 **ChatGPT - Complete**    
 
-<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_completion.png"><img src="static/screenshot_completion.png" width="750"></a>
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/blob/main/static/screenshot_completion.png"><img src="static/screenshot_completion.png" width="750"></a>
 
 **ChatGPT - Fun**    
 
-<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/static/screenshot_fun.png"><img src="static/screenshot_fun.png" width="750"></a>
+<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/blob/main/static/screenshot_fun.png"><img src="static/screenshot_fun.png" width="750"></a>
 
 ## Installation
 
