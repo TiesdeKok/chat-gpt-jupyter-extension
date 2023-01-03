@@ -1,14 +1,37 @@
 import { getPossibleElementByQuerySelector, getBefores } from './utils.js'
 import { promptSettings } from './prompt-configs.js'
 
-function BuildQuery(type : string) {
+function BuildQuery(type : string, siteName : string) : string {
     const prompt = promptSettings[type]
     
-    const focalCell = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected"])
-    const code = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected div.input_area div.CodeMirror-code"])
-    const stderr = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected div.output_area div.output_error"])
-    const stdout = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected div.output_area div.output_stdout"])
-    const stdresult = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected div.output_area div.output_result"])
+    let focalCell = null
+    let code = null
+    let stderr = null
+    let stdout = null
+    let stdresult = null
+    if (siteName === "notebook") {
+        focalCell = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected"])
+        code = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected div.input_area div.CodeMirror-code"])
+        stderr = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected div.output_area div.output_error"])
+        stdout = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected div.output_area div.output_stdout"])
+        stdresult = getPossibleElementByQuerySelector<HTMLInputElement>([".cell.selected div.output_area div.output_result"])
+    } else if (siteName === "lab") {
+        const active_notebook = document.querySelector<HTMLInputElement>('div.jp-NotebookPanel:not(.p-mod-hidden)')
+        if (active_notebook) {
+            focalCell = active_notebook.querySelector<HTMLInputElement>(".jp-CodeCell.jp-mod-selected")
+            code = active_notebook.querySelector<HTMLInputElement>(".jp-CodeCell.jp-mod-selected div.CodeMirror-code")
+            stderr = active_notebook.querySelector<HTMLInputElement>('.jp-CodeCell.jp-mod-selected div.jp-OutputArea-output[data-mime-type="application/vnd.jupyter.stderr"]')
+            stdout = active_notebook.querySelector<HTMLInputElement>('.jp-CodeCell.jp-mod-selected div.jp-OutputArea-output[data-mime-type="application/vnd.jupyter.stdout"]')
+            stdresult = active_notebook.querySelector<HTMLInputElement>('.jp-CodeCell.jp-mod-selected div.jp-OutputArea-output[data-mime-type="text/plain"]')
+        } else {
+            console.log("ChatGPT Jupyter: Warning - No active notebook panel found")
+            return ""
+        }
+        
+
+    } else {
+        return ""
+    }
 
     let befores
     if (prompt.numPrevCells > 0 && focalCell) {
@@ -61,7 +84,7 @@ function BuildQuery(type : string) {
             query += "\n```"
         }
 
-        console.log(query)
+        //console.log(query)
         return query
     } else {
         return ""

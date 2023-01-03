@@ -11,4 +11,9 @@ export const config: Record<string, NotebookInterface> = {
     resultContainerChild : "#pager-container",
 
   },
+  lab: {
+    buttonParent: "#jp-top-panel",
+    resultContainer: '#labContainerParent',
+    resultContainerChild : "#labContainerChild",
+  }
 }

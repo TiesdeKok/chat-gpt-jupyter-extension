@@ -11,6 +11,7 @@ import { promptSettings } from './prompt-configs.js'
 interface Props {
   question: string,
   type: string,
+  siteName: string
 }
 
 function ChatGPTQuery(props: Props) {
@@ -59,7 +60,7 @@ function ChatGPTQuery(props: Props) {
       <div id="answer" className="markdown-body gpt-inner" dir="auto">
         <div className="gpt-header">
           <p>{prompt.title}</p>
-          <ChatGPTFeedback messageId={answer.messageId} conversationId={answer.conversationId} />
+          <ChatGPTFeedback messageId={answer.messageId} conversationId={answer.conversationId} siteName={props.siteName}/>
         </div>
         <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>
           {answer.text}
@@ -72,7 +73,7 @@ function ChatGPTQuery(props: Props) {
     return (
       <p className="gpt-inner">
         Please login and pass Cloudflare check at{' '}
-        <a href="https://chat.openai.com" target="_blank" rel="noreferrer">
+        <a href="https://chat.openai.com" target="_blank" rel="noreferrer" style={{color: "#106ba3"}}>
           chat.openai.com
         </a>
         {retry > 0 && (

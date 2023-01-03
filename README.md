@@ -1,6 +1,6 @@
 # ChatGPT for Jupyter
 
-A browser extension to provide various helper functions in Jupyter Notebooks, powered by ChatGPT.
+A browser extension to provide various helper functions in Jupyter Notebooks and Jupyter Lab, powered by ChatGPT.
 
 Primary functions, have ChatGPT:
 
@@ -86,8 +86,10 @@ Please report any issues or feature requests on the GitHub Issue tab. I will try
 
 ## Outstanding items & Future plans
 
-- [ ] Add Jupyter Lab support   
+- [x] Add Jupyter Lab support   
 - [ ] Add Google Colab support
 - [ ] Add shortcuts  
 - [ ] Add interupt button   
 - [ ] Allow for custom prompts 
+- [ ] Add copy-paste functionality and/or auto-adding
+- [ ] Add integration tests

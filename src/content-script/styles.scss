@@ -11,6 +11,39 @@
 .chat-gpt-button {
     margin-left: 10px;
     margin-top: 3px;
+    border-radius: none !important;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    border-width: 1px;
+    border-style: solid;
+    border-image: none;
+}    
+
+.chat-gpt-button.disabled, .chat-gpt-button[disabled], fieldset[disabled] .btn {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    opacity: 0.65;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.chat-gpt-button:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    cursor: pointer;
+}
+
+.chat-gpt-button:active {
+    color: #333;
+    background-color: #e6e6e6;
+    background-image: none;
+    border-color: #adadad;
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 3px 5px rgb(0 0 0 / 13%);
+    box-shadow: inset 0 3px 5px rgb(0 0 0 / 13%);
 }
 
 .chat-gpt-container {
