@@ -54,7 +54,7 @@ Primary functions, have ChatGPT:
 
 #### Install from Chrome Web Store (Preferred)
 
-Not yet available, waiting for approval.
+https://chrome.google.com/webstore/detail/chatgpt-jupyter-ai-assist/dlipncbkjmjjdpgcnodkbdobkadiejll
 
 #### Local Install
 
