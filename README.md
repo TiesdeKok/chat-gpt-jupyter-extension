@@ -44,10 +44,6 @@ Primary functions, have ChatGPT:
 
 <a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/blob/main/static/screenshot_completion.png"><img src="static/screenshot_completion.png" width="750"></a>
 
-**ChatGPT - Fun**    
-
-<a href = "https://github.com/TiesdeKok/chat-gpt-jupyter-extension/blob/main/static/screenshot_fun.png"><img src="static/screenshot_fun.png" width="750"></a>
-
 ## Installation
 
 ### Install to Chrome/Edge
