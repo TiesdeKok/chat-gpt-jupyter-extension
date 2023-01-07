@@ -24,7 +24,6 @@ async function identify_notebook_type(config : Record<string, NotebookInterface>
           return key
         }
       }
-  
       tries += 1
       await new Promise(resolve => setTimeout(resolve, 500))
     }

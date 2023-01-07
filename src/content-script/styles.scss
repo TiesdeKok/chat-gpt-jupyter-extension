@@ -46,6 +46,12 @@
     box-shadow: inset 0 3px 5px rgb(0 0 0 / 13%);
 }
 
+.chat-gpt-copy-button {
+    position: relative;
+    float: right;
+    margin-bottom: -5px;
+}
+
 .chat-gpt-container {
   margin-bottom: 30px;
   border-radius: 8px;

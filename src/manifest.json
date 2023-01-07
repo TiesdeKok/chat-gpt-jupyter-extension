@@ -1,7 +1,7 @@
 {
   "name": "ChatGPT - Jupyter - AI Assistant",
   "description": "ChatGPT-powered AI assistant for Jupyter Notebooks",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "manifest_version": 3,
   "icons": {
     "16": "logo.png",
@@ -20,7 +20,7 @@
     {
       "matches": [
         "*://*/*.ipynb",
-        "*://*/lab/tree/*"
+        "*://*/lab*"
       ],
       "js": ["content-script.js"],
       "css": ["content-script.css"]
