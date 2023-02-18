@@ -7,6 +7,8 @@ import { Answer } from '../messaging'
 import ChatGPTFeedback from './ChatGPTFeedback'
 import './highlight.scss'
 import { promptSettings } from './prompt-configs.js'
+import { marked } from 'marked';
+
 
 interface Props {
   question: string,
@@ -67,12 +69,18 @@ function ChatGPTQuery(props: Props) {
     }
   }, [error])
 
+  const showPrompt = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const html = marked(props.question);
+    window.open('', '_blank')?.document.write(html);
+  };
+
   if (answer) {
     const prompt = promptSettings[props.type]
     return (
       <div id="answer" className="markdown-body gpt-inner" dir="auto">
         <div className="gpt-header">
-          <p>{prompt.title}</p>
+          <p>{prompt.title} (<a href = "#" onClick={showPrompt}>see prompt</a>)</p>
           <ChatGPTFeedback messageId={answer.messageId} conversationId={answer.conversationId} siteName={props.siteName}/>
         </div>
         <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>

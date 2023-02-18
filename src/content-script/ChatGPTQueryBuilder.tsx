@@ -147,7 +147,7 @@ function BuildQuery(type : string, siteName : string) : string {
         } else if (type == "debug") {
             query = promptTemplates["debug"](prev_cell_text, code, stderr_text)
         } else {
-            query = promptTemplates["fun"](prev_cell_text, code)
+            query = promptTemplates["review"](prev_cell_text, code)
         }
 
         //console.log(query)

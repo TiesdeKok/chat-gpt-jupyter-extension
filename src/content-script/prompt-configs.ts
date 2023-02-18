@@ -2,7 +2,7 @@ import {
     Icon,
     ProjectRoadmapIcon,
     BugIcon,
-    GiftIcon,
+    CodeReviewIcon,
     CommandPaletteIcon,
     PaintbrushIcon,
 } from '@primer/octicons-react'
@@ -41,10 +41,10 @@ export const promptSettings: Record<string, PromptSettings> = {
         maxCharPrevCells: 1250,
 
     },
-    fun : {
-        buttonLabel : "Fun",
-        buttonIcon : GiftIcon,
-        title : "ChatGPT - Fun",
-        maxCharPrevCells: 500,
+    review : {
+        buttonLabel : "Review",
+        buttonIcon : CodeReviewIcon,
+        title : "ChatGPT - Code Review",
+        maxCharPrevCells: 1250,
     }
 }

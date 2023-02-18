@@ -8,9 +8,9 @@ Primary functions, have ChatGPT:
 - **Explain** - Explain the content of your code cell, ELI5 style.
 - **Debug** - Help you debug an error message in your code cell.
 - **Complete** - Help you complete a code snippet in your code cell.
-- **Fun** - Provide a fun or helpful fact about your code cell.
+- **Review** - Provide a code review of your code cell.
 
-**Project status:** Beta - Bugs likely - If you run into issues or have feature suggestions --> Submit them as an issue!
+**Project status:** Stable - but ChatGPT changes frequently - if you run into problems or have feature suggestions --> Submit them as an issue!
 
 **Major acknowledgements:** 
 
@@ -85,7 +85,5 @@ Please report any issues or feature requests on the GitHub Issue tab. I will try
 - [x] Add Jupyter Lab support   
 - [x] Refactor prompt engineering
 - [x] Add copy-paste functionality and/or auto-adding
-- [ ] Add Google Colab support
-- [ ] Add shortcuts  
 - [ ] Add interupt button   
 - [ ] Add integration tests

@@ -12,7 +12,7 @@ export function Button(props: Props) {
     const isNotebook = props.siteName == "notebook"
     return (
         <button className="btn btn-default btn-xs chat-gpt-button" onClick={props.onClick } disabled={props.disabled} style= {{marginTop: isNotebook ? '-0.5px' : '4px' }} title={props.name} >
-            <props.icon size='small' className="icon" /> {isNotebook && props.name}
+            <props.icon size='small' className="icon" />
         </button> 
     )
 
