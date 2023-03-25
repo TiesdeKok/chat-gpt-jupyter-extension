@@ -1,7 +1,7 @@
 {
   "name": "ChatGPT - Jupyter - AI Assistant",
   "description": "ChatGPT-powered AI assistant for Jupyter Notebooks",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "manifest_version": 2,
   "icons": {
     "16": "logo.png",
@@ -9,11 +9,16 @@
     "48": "logo.png",
     "128": "logo.png"
   },
-  "permissions": ["https://*.openai.com/"],
+  "permissions": [
+    "https://*.openai.com/",
+    "storage"
+],
   "background": {
     "scripts": ["background.js"]
   },
-  "browser_action": {},
+  "action": {
+    "default_popup": "popup.html"
+  },
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true

@@ -48,28 +48,42 @@ export async function getChatGPTAccessToken(): Promise<string> {
 }
 
 export class ChatGPTProvider implements Provider {
-  constructor(private token: string) {
+  constructor(private token: string, private model: string) {
     this.token = token
+    this.model = model || ''
   }
 
-  private async fetchModels(): Promise<
+  public async fetchModels(): Promise<
     { slug: string; title: string; description: string; max_tokens: number }[]
   > {
     const resp = await request(this.token, 'GET', '/models').then((r) => r.json())
     return resp.models
   }
 
-  private async getModelName(): Promise<string> {
+  public async getModelNames(): Promise<string[]> {
     try {
       const models = await this.fetchModels()
-      return models[0].slug
+      return models.map((model) => model.slug)
     } catch (err) {
       console.error(err)
-      return 'text-davinci-002-render'
+      return ['text-davinci-002-render', "gpt-4"]
+    }
+  }
+
+  async initialize(): Promise<void> {
+    if (!this.model) {
+      try {
+        const modelNames = await this.getModelNames();
+        this.model = modelNames[0];
+      } catch (err) {
+        console.error('Error fetching model names:', err);
+      }
     }
   }
 
   async generateAnswer(params: GenerateAnswerParams) {
+    await this.initialize()
+
     let conversationId: string | undefined
 
     const cleanup = () => {
@@ -78,8 +92,10 @@ export class ChatGPTProvider implements Provider {
       }
     }
 
-    const modelName = await this.getModelName()
-    console.log('Using model:', modelName)
+    
+
+    //const modelName = await this.getModelName()
+    console.log('Using model:', this.model)
 
     await fetchSSE('https://chat.openai.com/backend-api/conversation', {
       method: 'POST',
@@ -100,10 +116,10 @@ export class ChatGPTProvider implements Provider {
             },
           },
         ],
-        model: modelName,
+        model: this.model,
         parent_message_id: uuidv4(),
       }),
-      onMessage(message: string) {
+      onMessage: (message) => {
         console.debug('sse message', message)
         if (message === '[DONE]') {
           params.onEvent({ type: 'done' })
@@ -114,7 +130,7 @@ export class ChatGPTProvider implements Provider {
         try {
           data = JSON.parse(message)
         } catch (err) {
-          console.error(err)
+          //console.error(err)
           return
         }
         const text = data.message?.content?.parts?.[0]
@@ -126,6 +142,8 @@ export class ChatGPTProvider implements Provider {
               text,
               messageId: data.message.id,
               conversationId: data.conversation_id,
+              model: this.model,
+              provider: 'ChatGPT App'
             },
           })
         }

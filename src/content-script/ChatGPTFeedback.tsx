@@ -18,32 +18,39 @@ function ChatGPTFeedback(props: Props) {
         if (action) {
         return
         }
-        setAction('thumbsUp')
-        await Browser.runtime.sendMessage({
-        type: 'FEEDBACK',
-        data: {
-            conversation_id: props.conversationId,
-            message_id: props.messageId,
-            rating: 'thumbsUp',
-        },
-        })
+
+        if (props.conversationId !== "") {
+            setAction('thumbsUp')
+            await Browser.runtime.sendMessage({
+            type: 'FEEDBACK',
+            data: {
+                conversation_id: props.conversationId,
+                message_id: props.messageId,
+                rating: 'thumbsUp',
+            },
+            })
+        }
+        
     }, [props, action])
 
     const clickThumbsDown = useCallback(async () => {
         if (action) {
         return
         }
-        setAction('thumbsDown')
-        await Browser.runtime.sendMessage({
-        type: 'FEEDBACK',
-        data: {
-            conversation_id: props.conversationId,
-            message_id: props.messageId,
-            rating: 'thumbsDown',
-            text: '',
-            tags: [],
-        },
-        })
+        if (props.conversationId !== "") {
+            setAction('thumbsDown')
+            await Browser.runtime.sendMessage({
+            type: 'FEEDBACK',
+            data: {
+                conversation_id: props.conversationId,
+                message_id: props.messageId,
+                rating: 'thumbsDown',
+                text: '',
+                tags: [],
+            },
+            })
+        }
+    
     }, [props, action])
 
         const clickClose = (siteName: string) => {
@@ -57,7 +64,6 @@ function ChatGPTFeedback(props: Props) {
                 const resultContainer = resultContainerParent?.querySelector<HTMLElement>(siteConfig.resultContainerChild)
 
                 if (resultContainerParent && resultContainer) {
-
                     
                         resultContainerParent.classList.add('lm-mod-hidden')
                         resultContainerParent.classList.add('p-mod-hidden')         

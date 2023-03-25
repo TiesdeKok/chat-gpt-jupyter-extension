@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'preact/hooks'
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import Browser from 'webextension-polyfill'
@@ -8,6 +8,7 @@ import ChatGPTFeedback from './ChatGPTFeedback'
 import './highlight.scss'
 import { promptSettings } from './prompt-configs.js'
 import { marked } from 'marked';
+import { GearIcon } from '@primer/octicons-react'
 
 
 interface Props {
@@ -75,14 +76,25 @@ function ChatGPTQuery(props: Props) {
     window.open('', '_blank')?.document.write(html);
   };
 
+  const openOptionsPage = useCallback(() => {
+    Browser.runtime.sendMessage({ type: 'OPEN_OPTIONS_PAGE' })
+  }, [])
+
   if (answer) {
     const prompt = promptSettings[props.type]
     return (
       <div id="answer" className="markdown-body gpt-inner" dir="auto">
         <div className="gpt-header">
-          <p>{prompt.title} (<a href = "#" onClick={showPrompt}>see prompt</a>)</p>
+          <p>{prompt.title} (<a href = "#" onClick={showPrompt}>prompt</a>)</p>
+          
           <ChatGPTFeedback messageId={answer.messageId} conversationId={answer.conversationId} siteName={props.siteName}/>
         </div>
+        <p>
+            <i><b>Model used:</b> {answer.provider} - {answer.model}</i>
+            <span className="cursor-pointer leading-[0] inline-flex items-center" style={{marginLeft : "4px"}} onClick={openOptionsPage}>
+                <GearIcon size={14} />
+            </span>
+        </p>
         <ReactMarkdown rehypePlugins={[[rehypeHighlight, { detect: true }]]}>
           {answer.text}
         </ReactMarkdown>
@@ -104,6 +116,7 @@ function ChatGPTQuery(props: Props) {
           </span>
         )}
       </p>
+      
     )
   }
   if (error) {

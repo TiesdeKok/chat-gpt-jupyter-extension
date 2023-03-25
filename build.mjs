@@ -1,49 +1,66 @@
 import archiver from 'archiver'
-import { sassPlugin } from 'esbuild-sass-plugin'
+import autoprefixer from 'autoprefixer'
+import * as dotenv from 'dotenv'
 import esbuild from 'esbuild'
-import fs, { promises as fsPromises } from 'fs'
+import postcssPlugin from 'esbuild-style-plugin'
+import fs from 'fs-extra'
+import tailwindcss from 'tailwindcss'
+
+dotenv.config()
 
 const outdir = 'build'
 
 async function deleteOldDir() {
-  await fsPromises.rm(outdir, { recursive: true, force: true })
+  await fs.remove(outdir)
 }
 
 async function runEsbuild() {
   await esbuild.build({
-    entryPoints: ['src/content-script/index.tsx', 'src/background/index.ts', 'src/popup/index.tsx'],
+    entryPoints: [
+      'src/content-script/index.tsx',
+      'src/background/index.ts',
+      'src/options/index.tsx',
+      'src/popup/index.tsx',
+    ],
     bundle: true,
     outdir: outdir,
     treeShaking: true,
-    minify: true,
-    define: {
-      'process.env.NODE_ENV': '"production"',
-    },
+    minify: false,
+    legalComments: 'none',
     jsxFactory: 'h',
     jsxFragment: 'Fragment',
     jsx: 'automatic',
-    plugins: [sassPlugin()],
+    loader: {
+      '.png': 'dataurl',
+    },
+    plugins: [
+      postcssPlugin({
+        postcss: {
+          plugins: [tailwindcss, autoprefixer],
+        },
+      }),
+    ],
   })
 }
 
 async function zipFolder(dir) {
-  const output = fs.createWriteStream(`${dir}.zip`)
-  const archive = archiver('zip', {
-    zlib: { level: 9 },
-  })
-  archive.pipe(output)
-  archive.directory(dir, false)
-  await archive.finalize()
-}
-
-async function copyFiles(entryPoints, targetDir) {
-  await fsPromises.mkdir(targetDir)
-  await Promise.all(
-    entryPoints.map(async (entryPoint) => {
-      await fsPromises.copyFile(entryPoint.src, `${targetDir}/${entryPoint.dst}`)
-    }),
-  )
-}
+    const output = fs.createWriteStream(`${dir}.zip`)
+    const archive = archiver('zip', {
+      zlib: { level: 9 },
+    })
+    archive.pipe(output)
+    archive.directory(dir, false)
+    await archive.finalize()
+  }
+  
+  async function copyFiles(entryPoints, targetDir) {
+    await fs.ensureDir(targetDir)
+    await Promise.all(
+      entryPoints.map(async (entryPoint) => {
+        await fs.copy(entryPoint.src, `${targetDir}/${entryPoint.dst}`)
+      }),
+    )
+  }
 
 async function build() {
   await deleteOldDir()
@@ -53,6 +70,9 @@ async function build() {
     { src: 'build/content-script/index.js', dst: 'content-script.js' },
     { src: 'build/content-script/index.css', dst: 'content-script.css' },
     { src: 'build/background/index.js', dst: 'background.js' },
+    { src: 'build/options/index.js', dst: 'options.js' },
+    { src: 'build/options/index.css', dst: 'options.css' },
+    { src: 'src/options/index.html', dst: 'options.html' },
     { src: 'build/popup/index.js', dst: 'popup.js' },
     { src: 'build/popup/index.css', dst: 'popup.css' },
     { src: 'src/popup/index.html', dst: 'popup.html' },
