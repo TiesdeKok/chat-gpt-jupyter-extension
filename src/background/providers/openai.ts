@@ -91,4 +91,32 @@ export class OpenAIProvider implements Provider {
     })
     return {}
   }
+
+  async transcribeAudio(file: File, prompt?: string): Promise<any> {
+    const endpoint = 'https://api.openai.com/v1/audio/transcriptions';
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("model", "whisper-1");
+    formData.append("response_format", "json");
+    formData.append("temperature", "0");
+  
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+      body: formData,
+    });
+  
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Error: ${response.status} ${response.statusText} - ${JSON.stringify(errorData)}`);
+      }
+  
+    const data = await response.json();
+    
+    console.log(data)
+    return data;
+  }
 }

@@ -2,7 +2,11 @@ import { getPossibleElementByQuerySelector, getBefores } from './utils.js'
 import { promptSettings } from './prompt-configs.js'
 import { promptTemplates } from './promptTemplates.js'
 
-function BuildQuery(type : string, siteName : string) : string {
+function BuildQuery(
+    type : string, 
+    siteName : string,
+    userInput? : string
+    ) : string {
     const prompt = promptSettings[type]
 
     /* -------------------------------------------------------------------------- */
@@ -146,8 +150,15 @@ function BuildQuery(type : string, siteName : string) : string {
             query = promptTemplates["format"](code)
         } else if (type == "debug") {
             query = promptTemplates["debug"](prev_cell_text, code, stderr_text)
-        } else {
+        } else if (type == "review") {
             query = promptTemplates["review"](prev_cell_text, code)
+        } else {
+            if (userInput) {
+                query = promptTemplates["question"](userInput)
+            } else {
+                // If no user input, then error
+                console.log("ChatGPT Jupyter: Error - No user input provided")
+            }
         }
 
         //console.log(query)

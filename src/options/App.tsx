@@ -5,6 +5,7 @@ import '../base.css'
 
 import logo from '../logo.png'
 import ProviderSelect from './ProviderSelect'
+import ApiKeyInput from './ApiKeyInput' 
 
 function OptionsPage() {
 
@@ -31,6 +32,11 @@ function OptionsPage() {
           Which AI Provider do you want to use?
         </Text>
         <ProviderSelect />
+
+        <Text h3 className="mt-10 mb-0 py-3">
+          What is your OpenAI API Key?
+        </Text>
+        <ApiKeyInput />
       </main>
     </div>
   )

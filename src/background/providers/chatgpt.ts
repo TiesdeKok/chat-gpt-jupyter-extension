@@ -92,8 +92,6 @@ export class ChatGPTProvider implements Provider {
       }
     }
 
-    
-
     //const modelName = await this.getModelName()
     console.log('Using model:', this.model)
 

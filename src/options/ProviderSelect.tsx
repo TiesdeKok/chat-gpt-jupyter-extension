@@ -1,63 +1,66 @@
-import { Button, Input, Select, Spinner, Tabs, useInput, useToasts } from '@geist-ui/core'
-import { FC, useCallback, useState } from 'react'
-import useSWR from 'swr'
-import { fetchExtensionConfigs } from '../api'
-import { getProviderConfigs, ProviderConfigs, ProviderType, saveProviderConfigs } from '../config'
-import { ChatGPTProvider, getChatGPTAccessToken } from '../background/providers/chatgpt'
-
-interface ConfigProps {
-  config: ProviderConfigs
-  models: Record<ProviderType, string[]>
-}
-
-async function loadModels(): Promise<Record<ProviderType, string[]>> {
-    const configs = await fetchExtensionConfigs()
+import {
+    Button,
+    Select,
+    Tabs,
+    useToasts,
+    Spinner
+  } from "@geist-ui/core";
+  import { FC, useCallback, useState, useEffect } from "react";
+  import {
+    getProviderConfigs,
+    ProviderConfigs,
+    ProviderType,
+    saveProviderConfigs,
+    loadModels,
+    getDefaultConfigs,
+  } from "../config";
   
-    const token = await getChatGPTAccessToken()
-    const chatGPTProvider = new ChatGPTProvider(token, '')
-    const webClientModelNames = await chatGPTProvider.getModelNames().catch((err) => {
-      console.error(err)
-      return configs.client_model_names
-    })
-  
-    return {
-      [ProviderType.API]: configs.api_model_names,
-      [ProviderType.WebClient]: webClientModelNames,
-    }
+  interface ConfigProps {
+    config: ProviderConfigs;
+    models: Record<ProviderType, string[]>;
   }
-
-const ConfigPanel: FC<ConfigProps> = ({ config, models }) => {
-    const [tab, setTab] = useState<ProviderType>(config.provider ?? ProviderType.WebClient)
-  const { bindings: apiKeyBindings } = useInput(config.configs[ProviderType.API]?.apiKey ?? '')
-  const [APIModel, setAPIModel] = useState(config.configs[ProviderType.API]?.model ?? models[ProviderType.API][0])
-  const [WebModel, setWebModel] = useState(config.configs[ProviderType.WebClient]?.model ?? models[ProviderType.WebClient][0])
-  const { setToast } = useToasts()
-
-  const save = useCallback(async () => {
-    if (tab === ProviderType.API) {
-      if (!apiKeyBindings.value) {
-        alert('Please enter your OpenAI API key')
-        return
+  
+  const ConfigPanel: FC<ConfigProps> = ({ config, models }) => {
+    const [tab, setTab] = useState<ProviderType>(
+      config.provider ?? ProviderType.WebClient
+    );
+    const [APIModel, setAPIModel] = useState(
+      config.configs[ProviderType.API]?.model ?? models[ProviderType.API][0]
+    );
+    const [WebModel, setWebModel] = useState(
+      config.configs[ProviderType.WebClient]?.model ??
+        models[ProviderType.WebClient][0]
+    );
+    const { setToast } = useToasts();
+  
+    const save = useCallback(async () => {
+      if (tab === ProviderType.API) {
+        if (!config.configs[ProviderType.API]?.apiKey) {
+          alert("Not saved! - Please first enter your OpenAI API key below.");
+          return;
+        }
+        if (!APIModel || !models[ProviderType.API].includes(APIModel)) {
+          alert("Please select a valid model");
+          return;
+        }
       }
-      if (!APIModel || !models[ProviderType.API].includes(APIModel)) {
-        alert('Please select a valid model')
-        return
-      }
-    }
-    await saveProviderConfigs(tab, {
-      [ProviderType.API]: {
-        model: APIModel,
-        apiKey: apiKeyBindings.value,
-      },
-      [ProviderType.WebClient]: {
-        model: WebModel,
-      },
-    })
-    setToast({ text: 'Changes saved', type: 'success' })
-  }, [apiKeyBindings.value, APIModel, WebModel, models, setToast, tab])
-
-  return (
+      await saveProviderConfigs(tab, {
+        [ProviderType.API]: {
+          model: APIModel,
+          apiKey: config.configs[ProviderType.API]?.apiKey,
+        },
+        [ProviderType.WebClient]: {
+          model: WebModel,
+        },
+      });
+      setToast({ text: "Changes saved", type: "success" });
+    }, [APIModel, WebModel, models, setToast, tab, config.configs]);
+  
+    return (
     <div className="flex flex-col gap-3">
+      <div className="text-red-600 font-semibold py-2">
+        You might not see all your models until you authenticate with OpenAI. You can do so by using the extension once. 
+      </div>
       <Tabs value={tab} onChange={(v) => setTab(v as ProviderType)}>
         <Tabs.Item label="ChatGPT webapp" value={ProviderType.WebClient}>
           The unofficial, free, API through the ChatGPT webapp.<br/>
@@ -96,18 +99,7 @@ const ConfigPanel: FC<ConfigProps> = ({ config, models }) => {
                   </Select.Option>
                 ))}
               </Select>
-              <Input htmlType="password" label="API key" scale={2 / 3} {...apiKeyBindings} />
             </div>
-            <span className="italic text-xs">
-              You can find or create your API key{' '}
-              <a
-                href="https://platform.openai.com/account/api-keys"
-                target="_blank"
-                rel="noreferrer"
-              >
-                here
-              </a>
-            </span>
           </div>
         </Tabs.Item>
       </Tabs>
@@ -116,76 +108,39 @@ const ConfigPanel: FC<ConfigProps> = ({ config, models }) => {
       </Button>
     </div>
   )
+  
 }
 
 function ProviderSelect() {
-    const query = useSWR("provider-configs", async () => {
-        const [config, models] = await Promise.all([getProviderConfigs(), loadModels()]);
-        return { config, models };
-    });
-    
-    if (query.isLoading) {
-        return <Spinner />;
+    const [config, setConfig] = useState<ProviderConfigs | null>(null);
+    const [models, setModels] = useState<Record<ProviderType, string[]> | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+  
+    const fetchConfigsAndModels = async () => {
+      try {
+        const [providerConfig, modelsData] = await Promise.all([getProviderConfigs(), loadModels()]);
+        const defaultConfig = await getDefaultConfigs();
+        setConfig(providerConfig || defaultConfig);
+        setModels(modelsData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching provider configs and models:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchConfigsAndModels();
+    }, []);
+  
+    if (isLoading) {
+      return <Spinner />;
     }
-
-    
-    const models = query.data?.models || {
-        [ProviderType.WebClient]: [],
-        [ProviderType.API]: [],
-    };
-    
-    const defaultConfig: ProviderConfigs = {
-        provider: ProviderType.WebClient,
-        configs: {
-        [ProviderType.WebClient]: { model: models[ProviderType.WebClient][0] },
-        [ProviderType.API]: { model: models[ProviderType.API][0], apiKey: "" },
-        },
-    };
-
-    const config = query.data?.config || defaultConfig;
-    
-    
+  
+    if (!models || !config) {
+      throw new Error('Unable to load models or config');
+    }
+  
     return <ConfigPanel config={config} models={models} />;
-}
-    
-export default ProviderSelect;
-
-
-/*
-function ProviderSelect() {
-  const query = useSWR("provider-configs", async () => {
-    const [config, models] = await Promise.all([getProviderConfigs(), loadModels()]);
-    return { config, models };
-  });
-
-  if (query.isLoading ) {
-    return <Spinner />;
   }
-
-  const defaultConfig: ProviderConfigs = {
-    provider: ProviderType.WebClient,
-    configs: {
-      [ProviderType.WebClient]: { model: "" },
-      [ProviderType.API]: { model: "", apiKey: "" },
-    },
-  };
-
-  const config = query.data!.config || defaultConfig;
-  const models = query.data!.models || {
-    [ProviderType.WebClient]: [],
-    [ProviderType.API]: [],
-  };
-
-  // Set the first respective item in models if the config has an empty string for the model
-  if (config.configs[ProviderType.WebClient]?.model === "") {
-    config.configs[ProviderType.WebClient].model = models[ProviderType.WebClient][0];
-  }
-  if (config.configs[ProviderType.API]?.model === "") {
-    config.configs[ProviderType.API].model = models[ProviderType.API][0];
-  }
-
-  return <ConfigPanel config={config} models={models} />;
-}
-
+  
   export default ProviderSelect;
-  */

@@ -5,6 +5,7 @@ import {
     CodeReviewIcon,
     CommandPaletteIcon,
     PaintbrushIcon,
+    CommentIcon
 } from '@primer/octicons-react'
 
 export interface PromptSettings {
@@ -45,6 +46,12 @@ export const promptSettings: Record<string, PromptSettings> = {
         buttonLabel : "Review",
         buttonIcon : CodeReviewIcon,
         title : "ChatGPT - Code Review",
+        maxCharPrevCells: 1250,
+    },
+    question : {
+        buttonLabel : "Question",
+        buttonIcon : CommentIcon,
+        title : "ChatGPT - Question",
         maxCharPrevCells: 1250,
     }
 }

@@ -197,11 +197,31 @@ ${focalCode}
 `
 }
 
+function questionTemplate(question: string) { return `
+**Your name is AI and you are a coding assistant. You are helping the user with their task.**
+
+Here are the requirements for being a good assistant:
+
+- Be polite and respectful in your response.
+- When providing code, make sure it is intelligent, correct, efficient, and readable.
+- If you are not sure about something, don't guess. 
+- Keep your responses short and to the point.
+- Provide any code and completions formatted as markdown code blocks.
+
+Here is the task or question that the user is asking you:
+
+${question}
+
+**AI: Happy to help, here is my response:**
+`
+}
+
+
 export const promptTemplates = {
     complete : completionTemplate,
     explain : explainTemplate,
     format : formatTemplate,
     debug : debugTemplate,
     review : reviewTemplate,
+    question : questionTemplate
 }
-

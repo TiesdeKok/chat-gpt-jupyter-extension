@@ -49,7 +49,7 @@ function ChatGPTQuery(props: Props) {
       }
     }
     port.onMessage.addListener(listener)
-    port.postMessage({ question: props.question })
+    port.postMessage({ type: 'GENERATE_ANSWERS', question: props.question })
     return () => {
       port.onMessage.removeListener(listener)
       port.disconnect()
@@ -90,7 +90,7 @@ function ChatGPTQuery(props: Props) {
           <ChatGPTFeedback messageId={answer.messageId} conversationId={answer.conversationId} siteName={props.siteName}/>
         </div>
         <p>
-            <i><b>Model used:</b> {answer.provider} - {answer.model}</i>
+            <i><b>Model:</b> {answer.provider} - {answer.model}</i>
             <span className="cursor-pointer leading-[0] inline-flex items-center" style={{marginLeft : "4px"}} onClick={openOptionsPage}>
                 <GearIcon size={14} />
             </span>

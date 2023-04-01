@@ -171,3 +171,109 @@
     }
   }
 }
+
+.recording-icon {
+    background-color: red;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .blink {
+    animation: blink 2s linear infinite;
+  }
+
+  .floating-input-container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    box-sizing: border-box;
+
+    .top-bar {
+        display: flex;
+        align-items: center;
+        user-select: none;
+        margin-bottom: 5px;
+      }
+      
+      .drag-handle {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: grab;
+        margin-right: 5px;
+      }
+      
+      .title {
+        font-weight: bold;
+        margin-bottom: 3px;
+      }
+      
+      textarea {
+        resize: none;
+        width: 100%;
+        font-family: inherit;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        min-height: 50px;
+      }
+      
+      button {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: normal;
+        text-align: center;
+        vertical-align: middle;
+        touch-action: manipulation;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        border-radius: 4;
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        cursor: pointer;
+      }
+  }
+  

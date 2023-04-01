@@ -26,7 +26,8 @@
     "rehype-highlight": "^6.0.0",
     "swr": "^2.0.0",
     "uuid": "^9.0.0",
-    "marked": "^4.2.12"
+    "marked": "^4.2.12",
+    "react-rnd": "10.4.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
@@ -36,6 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "@types/marked": "^4.0.8",
+    "@primer/octicons-react": "^17.9.0",
     "archiver": "^5.3.1",
     "autoprefixer": "^10.4.13",
     "chokidar-cli": "^3.0.0",
