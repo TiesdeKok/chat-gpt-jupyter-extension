@@ -1,21 +1,26 @@
 # ChatGPT for Jupyter
 
-A browser extension to provide various helper functions in Jupyter Notebooks and Jupyter Lab, powered by ChatGPT.
+A browser extension to provide various helper functions in Jupyter Notebooks and Jupyter Lab, powered by ChatGPT or GPT-4.
 
-Primary functions, have ChatGPT:
+Primary functions, have ChatGPT/GPT-4:
 
 - **Format** - Automatically add comments, docstrings, and formatting to your code cell.
 - **Explain** - Explain the content of your code cell, ELI5 style.
 - **Debug** - Help you debug an error message in your code cell.
 - **Complete** - Help you complete a code snippet in your code cell.
 - **Review** - Provide a code review of your code cell.
+- **Ask a question** - Ask ChatGPT a custom question.
+- **Voice command** - Ask ChatGPT a custom question through your microphone.
+    - Note: this requires an OpenAI API key and uses the OpenAI Whisper API, which charges $0.006 per minute.
 
-**Project status:** Stable - but ChatGPT changes frequently - if you run into problems or have feature suggestions --> Submit them as an issue!
+**Note: *Ask a question* and *Voice command* are a work-in-progress.**
+
+**Project status:** Stable - but developments happen frequently - if you run into problems or have feature suggestions --> Submit them as an issue!
 
 **Major acknowledgements:** 
 
-- [ChatGPT](https://openai.com/blog/chatgpt/) for doing all the heavy lifting. 
-- [wong2/chat-gpt-google-extension](https://github.com/wong2/chat-gpt-google-extension) for serving as a base for the extension. The entire backend integration with ChatGPT is built by them and I use it as-is (including the readme instructions below). It is phenomenal work and I highly recommend checking it out.
+- [ChatGPT/GPT-4](https://openai.com/blog/chatgpt/) for doing all the heavy lifting. 
+- [wong2/chat-gpt-google-extension](https://github.com/wong2/chat-gpt-google-extension) for serving as the original base for the extension.
 
 **Caveats & Warnings:**
 

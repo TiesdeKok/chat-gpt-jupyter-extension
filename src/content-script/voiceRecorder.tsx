@@ -82,13 +82,11 @@ class VoiceRecorder extends Component<VoiceRecorderProps, VoiceRecorderState> {
   sendToAPI = async (audioBlob: Blob) => {
     const dataUrl = await this.blobToDataURL(audioBlob);
 
-    console.log('Sending dataUrl:', dataUrl);
-
     const port = Browser.runtime.connect({ name: 'transcription' });
     port.postMessage({ type: 'TRANSCRIBE_AUDIO', dataUrl });
     port.onMessage.addListener((msg) => {
       if (msg.event === 'DONE') {
-        console.log('Success:', msg.data);
+        //console.log('Success:', msg.data);
 
         // Send the transcription result to the AI model
         submit_and_add_question(
@@ -118,7 +116,7 @@ class VoiceRecorder extends Component<VoiceRecorderProps, VoiceRecorderState> {
     };
 
     return (
-        <button className="btn btn-default btn-xs chat-gpt-button" onClick={toggleRecording} style= {{marginTop: isNotebook ? '-0.5px' : '4px' }} title="Voice Question">
+        <button id="ai_ext_voice_command" className="btn btn-default btn-xs chat-gpt-button" onClick={toggleRecording} style= {{marginTop: isNotebook ? '-0.5px' : '4px' }} title="Voice Question">
           {isRecording ? (
             <>
               <span className="recording-icon blink"></span>

@@ -1,24 +1,20 @@
-// FloatingInput.tsx
-import React, { useImperativeHandle, useRef, useState } from 'react';
+import React, { useImperativeHandle, useRef, useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import { GrabberIcon, XIcon } from '@primer/octicons-react';
-
-import { submit_and_add_question } from './ChatGPTRender';
-
 
 interface FloatingInputProps {
   onSubmit: (inputValue: string) => void;
 }
 
 const FloatingInput = React.forwardRef((props: FloatingInputProps, ref) => {
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const handleSubmit = () => {
     if (textareaRef.current) {
       props.onSubmit(textareaRef.current.value);
       textareaRef.current.value = '';
-    setIsVisible(false);
+      setIsVisible(false);
     }
   };
 
@@ -26,37 +22,69 @@ const FloatingInput = React.forwardRef((props: FloatingInputProps, ref) => {
     setIsVisible(false);
   };
 
-  const handleOpen = () => { // Add this function
+  const handleOpen = () => {
     setIsVisible(true);
   };
 
-// Expose the handleOpen function to the parent component
-useImperativeHandle(ref, () => ({
+  useImperativeHandle(ref, () => ({
     openFloatingInput: handleOpen,
-    }));
+  }));
 
+  // Focus textarea when isVisible changes to true
+  useEffect(() => {
+    if (isVisible && textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [isVisible]);
+
+  // Add event listener for Ctrl+Enter
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && e.ctrlKey) {
+      handleSubmit();
+    } else if (e.key === 'Escape') {
+        handleClose();
+    } 
+    e.stopPropagation();
+  };
+    
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
   const boxWidth = 600;
   const boxHeight = 300;
-  const initialX = (windowWidth - boxWidth) / 2;
-  const initialY = (windowHeight - boxHeight) / 2;
+  const topPercentage = (windowHeight - boxHeight) / (2 * windowHeight) * 100;
+  const leftPercentage = (windowWidth - boxWidth) / (2 * windowWidth) * 100;
 
   if (!isVisible) {
     return null;
   }
+    
 
   return (
-    <Rnd
-      default={{
-        x: initialX,
-        y: initialY,
-        width: boxWidth,
-        height: boxHeight,
+    <div>
+    <div className="backdrop" onClick={handleClose}></div>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'fixed',
+        top: `${topPercentage}%`,
+        left: `${leftPercentage}%`,
+        right: 0,
+        bottom: 0,
+        zIndex: 9999998,
       }}
-      minWidth={boxWidth/2}
-      minHeight={boxHeight/2}
-      dragHandleClassName="drag-handle"
+    >
+      <Rnd
+        default={{
+          x: 0,
+          y: 0,
+          width: boxWidth,
+          height: boxHeight,
+        }}
+        minWidth={boxWidth / 2}
+        minHeight={boxHeight / 2}
+      dragHandleClassName='drag-handle'
       enableResizing={{
         top: true,
         right: true,
@@ -69,7 +97,8 @@ useImperativeHandle(ref, () => ({
       }}
       cancel="textarea, button"
       dragGrid={[40, 40]}
-      >
+      style = {{zIndex: 9999999}}
+    >
       <div className="floating-input-container">
         <div className="top-bar">
           <div className="drag-handle">
@@ -85,11 +114,14 @@ useImperativeHandle(ref, () => ({
             ref={textareaRef}
             style={{ flex: 1 }}
             placeholder="Type your input"
+            onKeyDown={handleKeyDown}
           />
         </div>
-        <button onClick={handleSubmit}>Submit</button>
+        <button onClick={handleSubmit}>Submit (ctrl+Enter)</button>
       </div>
-    </Rnd>
+      </Rnd>
+    </div>
+    </div>
   );
 });
 

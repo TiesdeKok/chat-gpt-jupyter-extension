@@ -6,6 +6,7 @@ import './styles.scss';
 import { promptSettings } from './prompt-configs.js';
 import { CopilotIcon } from '@primer/octicons-react';
 import { submit_and_add_question } from './ChatGPTRender';
+import Browser from 'webextension-polyfill'
 
 import VoiceRecorder from './voiceRecorder';
 import FloatingInput from './FloatingInput';
@@ -72,6 +73,7 @@ function create_interface(siteConfig: NotebookInterface, siteName: string) {
 
   const buttons = [
     <Button
+        id = "ai_ext_null"
       name="ChatGPT:"
       onClick={() => null}
       icon={CopilotIcon}
@@ -83,6 +85,7 @@ function create_interface(siteConfig: NotebookInterface, siteName: string) {
       if (prompt.buttonLabel === 'Question') {
         return (
           <Button
+            id = {prompt.buttonId}
             name={prompt.buttonLabel}
             onClick={() => floatingInputRef.current.openFloatingInput()}
             icon={prompt.buttonIcon}
@@ -92,6 +95,7 @@ function create_interface(siteConfig: NotebookInterface, siteName: string) {
       } else {
         return (
           <Button
+            id = {prompt.buttonId}
             name={prompt.buttonLabel}
             onClick={() =>
               submit_and_add_question(key, siteConfig, siteName)
@@ -109,20 +113,71 @@ function create_interface(siteConfig: NotebookInterface, siteName: string) {
 
   const floatingInputContainer = document.createElement('div');
 
-  document.body.appendChild(floatingInputContainer);
-        render(
-        <FloatingInput
-        ref={floatingInputRef}
-        onSubmit={(questionText) => submit_and_add_question(
-            "question",
-            siteConfig,
-            siteName,
-            questionText
-          )}
-        />,
-        floatingInputContainer,
-        );
+  let sideBody = document.querySelector('body');
+  if (siteName === 'notebook') {
+    sideBody = document.querySelector('#ipython-main-app');
+  } 
+
+    if (!sideBody) {
+        console.log('ChatGPT Jupyter: Error - could not find side body');
+        return
+    }
+
+    sideBody.appendChild(floatingInputContainer);
+            render(
+            <FloatingInput
+            ref={floatingInputRef}
+            onSubmit={(questionText) => submit_and_add_question(
+                "question",
+                siteConfig,
+                siteName,
+                questionText
+            )}
+            />,
+            floatingInputContainer,
+            );
 }
+
+/* -------------------------------------------------------------------------- */
+/*                             Shortcut listeners                             */
+/* -------------------------------------------------------------------------- */ 
+
+Browser.runtime.onMessage.addListener((message: any, sender: Browser.Runtime.MessageSender): void | Promise<any> => {
+    if (message.action === 'formatCode') {
+      const button = document.querySelector('#ai_ext_format_code') as HTMLButtonElement;
+      if (button) { button.click() }
+    }
+
+    if (message.action === 'explainCode') {
+        const button = document.querySelector('#ai_ext_explain_code') as HTMLButtonElement;
+        if (button) { button.click() }
+    }
+
+    if (message.action === 'debugCode') {
+        const button = document.querySelector('#ai_ext_debug_code') as HTMLButtonElement;
+        if (button) { button.click() }
+    }
+
+    if (message.action === 'completeCode') {
+        const button = document.querySelector('#ai_ext_complete_code') as HTMLButtonElement;
+        if (button) { button.click() }
+    }
+
+    if (message.action === 'reviewCode') {
+        const button = document.querySelector('#ai_ext_review_code') as HTMLButtonElement;
+        if (button) { button.click() }
+    }
+
+    if (message.action === 'askQuestion') {
+        const button = document.querySelector('#ai_ext_question') as HTMLButtonElement;
+        if (button) { button.click() }
+    }
+
+    if (message.action === 'voiceCommand') {
+        const button = document.querySelector('#ai_ext_voice_command') as HTMLButtonElement;
+        if (button) { button.click() }
+    }
+  });
 
 /* -------------------------------------------------------------------------- */
 /*                           Execute extension logic                          */

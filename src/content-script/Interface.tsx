@@ -1,6 +1,7 @@
 import { Icon } from '@primer/octicons-react'
 
 interface Props { 
+    id : string,
     name : string,
     onClick : () => void,
     icon : Icon,
@@ -11,7 +12,7 @@ interface Props {
 export function Button(props: Props) {  
     const isNotebook = props.siteName == "notebook"
     return (
-        <button className="btn btn-default btn-xs chat-gpt-button" onClick={props.onClick } disabled={props.disabled} style= {{marginTop: isNotebook ? '-0.5px' : '4px' }} title={props.name} >
+        <button id={props.id} className="btn btn-default btn-xs chat-gpt-button" onClick={props.onClick } disabled={props.disabled} style= {{marginTop: isNotebook ? '-0.5px' : '4px' }} title={props.name} >
             <props.icon size='small' className="icon" />
         </button> 
     )

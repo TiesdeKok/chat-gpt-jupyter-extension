@@ -37,6 +37,7 @@ function BuildQuery(
             return ""
         }
     } else {
+        console.log("ChatGPT Jupyter: Warning - Unknown site name")
         return ""
     }
 
@@ -141,7 +142,7 @@ function BuildQuery(
     /*                 Third, build the query string and return it                */
     /* -------------------------------------------------------------------------- */
     let query = ""
-    if (code && code) {
+    if (code || (type == "question" && userInput)) {
         if (type == "complete") {
             query = promptTemplates["complete"](prev_cell_text, code)
         } else if (type == "explain") {
@@ -156,14 +157,13 @@ function BuildQuery(
             if (userInput) {
                 query = promptTemplates["question"](userInput)
             } else {
-                // If no user input, then error
                 console.log("ChatGPT Jupyter: Error - No user input provided")
+                return ""
             }
         }
-
-        //console.log(query)
         return query
     } else {
+        console.log("ChatGPT Jupyter: Error - No code found")
         return ""
     }
 }

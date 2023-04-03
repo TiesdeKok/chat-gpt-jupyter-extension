@@ -1,5 +1,8 @@
-import { CssBaseline, GeistProvider, Text} from '@geist-ui/core'
-import { useState, useEffect } from 'preact/hooks'
+import { CssBaseline, GeistProvider, Text, Divider} from '@geist-ui/core'
+import { useState, useEffect, useCallback } from 'preact/hooks'
+import Browser from 'webextension-polyfill'
+import { ToolsIcon } from '@primer/octicons-react'
+
 
 import '../base.css'
 
@@ -7,7 +10,14 @@ import logo from '../logo.png'
 import ProviderSelect from './ProviderSelect'
 import ApiKeyInput from './ApiKeyInput' 
 
+
+
+
 function OptionsPage() {
+
+    const openShortcutsPage = useCallback(() => {
+        Browser.tabs.create({ url: 'chrome://extensions/shortcuts' })
+      }, [])
 
   return (
     <div className="container mx-auto">
@@ -37,7 +47,17 @@ function OptionsPage() {
           What is your OpenAI API Key?
         </Text>
         <ApiKeyInput />
+
+        <Divider className="mt-10 mb-5 py-3" />
+
+        <div className="flex flex-row items-center px-1">
+            <p className="cursor-pointer leading-[0] italic text-center" onClick={openShortcutsPage}>
+                Pro-tip: click here to set keyboard shortcuts {"-->"} <ToolsIcon size={16} /> Shortcuts
+            </p>
+        </div>
       </main>
+
+      
     </div>
   )
 }

@@ -1,7 +1,7 @@
 {
   "name": "ChatGPT - Jupyter - AI Assistant",
   "description": "ChatGPT-powered AI assistant for Jupyter Notebooks",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "manifest_version": 3,
   "icons": {
     "16": "logo.png",
@@ -24,11 +24,50 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*/*.ipynb",
+        "*://*/*.ipynb*",
         "*://*/lab*"
       ],
       "js": ["content-script.js"],
       "css": ["content-script.css"]
     }
-  ]
+  ],
+  "commands" : {
+    "format_code": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+1"
+        },
+        "description": "Format code"
+      },    
+
+      "explain_code": {
+        "description": "Explain code - (set manually)"
+      },
+
+      "debug_code": {
+        "description": "Debug code - (set manually)"
+      },
+
+      "complete_code": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+4"
+        },
+        "description": "Complete code"
+      },
+      "review_code": {
+        "description": "Review code - (set manually)"
+      },
+
+      "ask_question": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+6"
+        },
+        "description": "Ask coding question"
+      },
+      "voice_command": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+7"
+        },
+        "description": "Voice command"
+      }
+  }
 }

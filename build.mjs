@@ -25,7 +25,7 @@ async function runEsbuild() {
     bundle: true,
     outdir: outdir,
     treeShaking: true,
-    minify: false,
+    minify: true,
     legalComments: 'none',
     jsxFactory: 'h',
     jsxFragment: 'Fragment',

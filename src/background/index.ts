@@ -30,7 +30,6 @@ async function generateAnswers(port: Browser.Runtime.Port, question: string) {
       prompt: question,
       signal: controller.signal,
       onEvent(event) {
-        console.log("debug")
         if (event.type === 'done') {
           port.postMessage({ event: 'DONE' })
           return
@@ -86,7 +85,6 @@ port.onMessage.addListener(async (msg) => {
     if (msg.type === 'GENERATE_ANSWERS') {
         await generateAnswers(port, msg.question);
     } else if (msg.type === 'TRANSCRIBE_AUDIO') {
-        console.log("received", msg.dataUrl)
         await transcribeAudio(port, msg.dataUrl);
     }
     } catch (err: any) {
@@ -116,3 +114,70 @@ if (details.reason === 'install') {
     Browser.runtime.openOptionsPage()
 }
 })
+
+Browser.commands.onCommand.addListener((command) => {
+    if (command === 'format_code') {
+      Browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+        if (tabs.length === 0 || !tabs[0].id) {
+          return;
+        }
+        Browser.tabs.sendMessage(tabs[0].id, { action: 'formatCode' });
+      });
+    }
+
+    if (command === 'explain_code') {
+        Browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+          if (tabs.length === 0 || !tabs[0].id) {
+            return;
+          }
+          Browser.tabs.sendMessage(tabs[0].id, { action: 'explainCode' });
+        });
+      }
+
+    if (command === 'debug_code') {
+        Browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+            if (tabs.length === 0 || !tabs[0].id) {
+            return;
+            }
+            Browser.tabs.sendMessage(tabs[0].id, { action: 'debugCode' });
+        });
+    }
+
+    if (command === 'complete_code') {
+        Browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+            if (tabs.length === 0 || !tabs[0].id) {
+            return;
+            }
+            Browser.tabs.sendMessage(tabs[0].id, { action: 'completeCode' });
+        });
+    }
+
+    if (command === 'review_code') {
+        Browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+            if (tabs.length === 0 || !tabs[0].id) {
+            return;
+            }
+            Browser.tabs.sendMessage(tabs[0].id, { action: 'reviewCode' });
+        });
+    }
+
+    if (command === 'ask_question') {
+        Browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+            if (tabs.length === 0 || !tabs[0].id) {
+            return;
+            }
+            Browser.tabs.sendMessage(tabs[0].id, { action: 'askQuestion' });
+        });
+    }
+
+    if (command === 'voice_command') {
+        Browser.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+            if (tabs.length === 0 || !tabs[0].id) {
+            return;
+            }
+            Browser.tabs.sendMessage(tabs[0].id, { action: 'voiceCommand' });
+        });
+    }
+
+  });
+  
