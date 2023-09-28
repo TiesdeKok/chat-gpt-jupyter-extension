@@ -1,6 +1,6 @@
 # ChatGPT for Jupyter
 
-**September 2023 Update:** This repository is archived as I am unable to maintain it in my new role. I recommend using: https://github.com/jupyterlab/jupyter-ai as an alternative. 
+**⚠️ September 2023 Update:** This repository is archived as I am unable to maintain it in my new role. I recommend using: https://github.com/jupyterlab/jupyter-ai as an alternative. 
 
 -----
 
