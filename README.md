@@ -1,5 +1,9 @@
 # ChatGPT for Jupyter
 
+**September 2023 Update:** This repository is archived as I am unable to maintain it in my new role. I recommend using: https://github.com/jupyterlab/jupyter-ai as an alternative. 
+
+-----
+
 A browser extension to provide various helper functions in Jupyter Notebooks and Jupyter Lab, powered by ChatGPT or GPT-4.
 
 Primary functions, have ChatGPT/GPT-4:
